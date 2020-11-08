@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.stowe.orderservice.domain.model.Client;
 import com.stowe.orderservice.domain.repository.ClientRepository;
+import com.stowe.orderservice.domain.service.ClientRegisterService;
 
 @RestController
 @RequestMapping("/clients")
@@ -32,6 +33,9 @@ public class ClientController {
 
 	@Autowired
 	private ClientRepository clientRepository;
+	
+	@Autowired
+	private ClientRegisterService clientRegisterService;
 
 	@GetMapping
 	public List<Client> list() {
@@ -52,7 +56,7 @@ public class ClientController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public  Client add(@Valid @RequestBody Client client) {
-		return clientRepository.save(client);
+		return clientRegisterService.save(client);
 	}
 	
 	@PutMapping("/{clientId}")
@@ -63,7 +67,7 @@ public class ClientController {
 		}
 		
 		client.setId(clientId);
-		client = clientRepository.save(client);
+		client = clientRegisterService.save(client);
 		
 		return ResponseEntity.ok(client);
 	}
@@ -74,7 +78,7 @@ public class ClientController {
 			return ResponseEntity.notFound().build();
 		}
 		
-		clientRepository.deleteById(clientId);
+		clientRegisterService.deleteById(clientId);
 		
 		return ResponseEntity.noContent().build(); 
 	}
