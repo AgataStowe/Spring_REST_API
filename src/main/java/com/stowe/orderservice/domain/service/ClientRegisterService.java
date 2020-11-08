@@ -17,7 +17,7 @@ public class ClientRegisterService {
 		Client clientBd = clientRepository.findByEmail(client.getEmail());
 		
 		if(clientBd != null && !clientBd.equals(client)) {
-			throw new NegocioException("Já existe um cliente cadastrado com esse email. \nthere is already a client registered with this email");
+			throw new NegocioException("Já existe um cliente cadastrado com esse email. (there is already a client registered with this email)");
 		}
 		
 		
